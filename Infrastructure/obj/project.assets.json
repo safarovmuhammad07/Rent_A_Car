@@ -90,6 +90,22 @@
           }
         }
       },
+      "Scalar.AspNetCore/1.2.55": {
+        "type": "package",
+        "compile": {
+          "lib/net9.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Scalar.AspNetCore.dll": {
+            "related": ".xml"
+          }
+        },
+        "frameworkReferences": [
+          "Microsoft.AspNetCore.App"
+        ]
+      },
       "Swashbuckle.AspNetCore/7.2.0": {
         "type": "package",
         "dependencies": {
@@ -162,6 +178,7 @@
         "dependencies": {
           "Dapper": "2.1.35",
           "Npgsql": "9.0.2",
+          "Scalar.AspNetCore": "1.2.55",
           "Swashbuckle.AspNetCore": "7.2.0"
         },
         "compile": {
@@ -563,6 +580,23 @@
         "postgresql.png"
       ]
     },
+    "Scalar.AspNetCore/1.2.55": {
+      "sha512": "zArlr6nfPQMRwyia0WFirsyczQby51GhNgWITiEIRkot+CVGZSGQ4oWGqExO11/6x26G+mcQo9Oft1mGpN0/ZQ==",
+      "type": "package",
+      "path": "scalar.aspnetcore/1.2.55",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "README.md",
+        "icon.png",
+        "lib/net8.0/Scalar.AspNetCore.dll",
+        "lib/net8.0/Scalar.AspNetCore.xml",
+        "lib/net9.0/Scalar.AspNetCore.dll",
+        "lib/net9.0/Scalar.AspNetCore.xml",
+        "scalar.aspnetcore.1.2.55.nupkg.sha512",
+        "scalar.aspnetcore.nuspec"
+      ]
+    },
     "Swashbuckle.AspNetCore/7.2.0": {
       "sha512": "vJv19UpWm6OOgnS9QLDnWARNVasXUfj8SFvlG7UVALm4nBnfwRnEky7C0veSDqMUmBeMPC6Ec3d6G1ts/J04Uw==",
       "type": "package",
@@ -660,6 +694,7 @@
       "Dapper >= 2.1.35",
       "DoMain >= 1.0.0",
       "Npgsql >= 9.0.2",
+      "Scalar.AspNetCore >= 1.2.55",
       "Swashbuckle.AspNetCore >= 7.2.0"
     ]
   },
@@ -675,6 +710,7 @@
       "packagesPath": "C:\\Users\\Safarov\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Safarov\\Desktop\\.NET Course\\rentAcar\\Infrastructure\\obj\\",
       "projectStyle": "PackageReference",
+      "UsingMicrosoftNETSdk": false,
       "configFilePaths": [
         "C:\\Users\\Safarov\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
@@ -688,8 +724,8 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\Safarov\\Desktop\\.NET Course\\rentAcar\\DoMain\\DoMain.csproj": {
-              "projectPath": "C:\\Users\\Safarov\\Desktop\\.NET Course\\rentAcar\\DoMain\\DoMain.csproj"
+            "C:\\Users\\Safarov\\Desktop\\.NET Course\\rentAcar\\Domain\\DoMain.csproj": {
+              "projectPath": "C:\\Users\\Safarov\\Desktop\\.NET Course\\rentAcar\\Domain\\DoMain.csproj"
             }
           }
         }
@@ -703,8 +739,7 @@
         "enableAudit": "true",
         "auditLevel": "low",
         "auditMode": "direct"
-      },
-      "SdkAnalysisLevel": "9.0.100"
+      }
     },
     "frameworks": {
       "net9.0": {
@@ -717,6 +752,10 @@
           "Npgsql": {
             "target": "Package",
             "version": "[9.0.2, )"
+          },
+          "Scalar.AspNetCore": {
+            "target": "Package",
+            "version": "[1.2.55, )"
           },
           "Swashbuckle.AspNetCore": {
             "target": "Package",

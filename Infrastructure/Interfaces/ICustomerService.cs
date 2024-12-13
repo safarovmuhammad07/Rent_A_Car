@@ -1,12 +1,13 @@
 ﻿using DoMain.Models;
+using Infrastructure.ApiResponse;
 
 namespace Infrastructure.Interfaces;
 
 public interface ICustomerService
 {
-    List<Customer> GetCustomers();
-    Customer GetCustomerById(int id);
-    bool AddCustomer(Customer customer);
-    bool UpdateCustomer(Customer customer);
-    bool DeleteCustomer(Customer customer);
+    Responce<List<Customer>> GetCustomers();
+    Responce<Customer> GetCustomerById(int id);
+    Responce<bool> AddCustomer(Customer customer);
+    Responce<bool> UpdateCustomer(Customer customer);
+    Responce<bool> DeleteCustomer(int id);
 }

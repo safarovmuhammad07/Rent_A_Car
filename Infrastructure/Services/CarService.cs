@@ -1,5 +1,7 @@
-﻿using Dapper;
+﻿using System.Net;
+using Dapper;
 using DoMain.Models;
+using Infrastructure.ApiResponse;
 using Infrastructure.DataContext;
 using Infrastructure.Interfaces;
 
@@ -7,34 +9,39 @@ namespace Infrastructure.Services;
 
 public class CarService(DapperContext context): ICarService
 {
-    public List<Car> GetCars()
+    public Responce<List<Car>> GetCars()
     {
         var sql = "select * from Car";
-        return context.GetConnection().Query<Car>(sql).ToList();
+        var cars= context.GetConnection().Query<Car>(sql).ToList();
+        return new Responce<List<Car>>(cars);
     }
 
-    public Car GetCarById(int carId)
+    public Responce<Car> GetCarById(int carId)
     {
         var sql = "select * from Car where Id = @Id";
-        return context.GetConnection().Query<Car>(sql, new { Id = carId }).FirstOrDefault();
+        var car =context.GetConnection().Query<Car>(sql, new { Id = carId }).FirstOrDefault();
+        return car == null ? new Responce<Car>(HttpStatusCode.NotFound,"Not found") : new Responce<Car>(car);
     }
 
-    public bool AddCar(Car car)
+    public Responce<bool> AddCar(Car car)
     {
         var sql= " Insert into Car(Name,Model,Price,Image) values (@Name,@Model,@Price,@Image)";
-        return context.GetConnection().Execute(sql, car)>0;
+        var res= context.GetConnection().Execute(sql, car);
+        return res == 0 ? new Responce<bool>(HttpStatusCode.InternalServerError,"Internal Server Error") : new Responce<bool>(HttpStatusCode.Created, "Created successfully");
     }
 
-    public bool UpdateCar(Car car)
+    public Responce<bool> UpdateCar(Car car)
     {
         var sql= "Update Car set Name=@Name,Model=@Model,Price=@Price,Image=@Image";
-        return context.GetConnection().Execute(sql, car)>0;
+        var res = context.GetConnection().Execute(sql, car);
         
+        return res == 0 ? new Responce<bool>(HttpStatusCode.NotFound,"Not found") : new Responce<bool>(HttpStatusCode.OK, "Updated successfully");
     }
 
-    public bool DeleteCar(int carId)
+    public Responce<bool> DeleteCar(int carId)
     {
         var sql = "Delete from Car where Id = @Id";
-        return context.GetConnection().Execute(sql, new { Id = carId }) > 0;
+        var res= context.GetConnection().Execute(sql, new { Id = carId }) ;
+        return res==0 ? new Responce<bool>(HttpStatusCode.NotFound,"Not found") : new Responce<bool>(HttpStatusCode.OK,"Deleted successfully");
     }
 }

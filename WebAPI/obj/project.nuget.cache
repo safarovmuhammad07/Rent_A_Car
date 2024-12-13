@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ZYBecLFdZYU=",
+  "dgSpecHash": "X46y3G2ejls=",
   "success": true,
   "projectFilePath": "C:\\Users\\Safarov\\Desktop\\.NET Course\\rentAcar\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
@@ -11,6 +11,7 @@
     "C:\\Users\\Safarov\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\8.0.2\\microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512",
     "C:\\Users\\Safarov\\.nuget\\packages\\microsoft.openapi\\1.6.22\\microsoft.openapi.1.6.22.nupkg.sha512",
     "C:\\Users\\Safarov\\.nuget\\packages\\npgsql\\9.0.2\\npgsql.9.0.2.nupkg.sha512",
+    "C:\\Users\\Safarov\\.nuget\\packages\\scalar.aspnetcore\\1.2.55\\scalar.aspnetcore.1.2.55.nupkg.sha512",
     "C:\\Users\\Safarov\\.nuget\\packages\\swashbuckle.aspnetcore\\7.2.0\\swashbuckle.aspnetcore.7.2.0.nupkg.sha512",
     "C:\\Users\\Safarov\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\7.2.0\\swashbuckle.aspnetcore.swagger.7.2.0.nupkg.sha512",
     "C:\\Users\\Safarov\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\7.2.0\\swashbuckle.aspnetcore.swaggergen.7.2.0.nupkg.sha512",

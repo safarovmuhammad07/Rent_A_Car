@@ -1,5 +1,7 @@
-﻿using Dapper;
+﻿using System.Net;
+using Dapper;
 using DoMain.Models;
+using Infrastructure.ApiResponse;
 using Infrastructure.DataContext;
 using Infrastructure.Interfaces;
 
@@ -7,33 +9,48 @@ namespace Infrastructure.Services;
 
 public class CarLocationService(DapperContext context): ICarLocationService 
 {
-    public List<CarLocation> GetCarLocations()
+    public Responce<List<CarLocation>> GetCarLocations()
     {
         var sql = "select * from CarLocation";
-        return context.GetConnection().Query<CarLocation>(sql).ToList();
+        var cars= context.GetConnection().Query<CarLocation>(sql).ToList();
+        return new Responce<List<CarLocation>>(cars);
     }
 
-    public CarLocation GetCarLocation(int carId)
+    public Responce<CarLocation> GetCarLocation(int carId)
     {
         var sql = "select * from CarLocation where CarId = @CarId";
-        return context.GetConnection().Query<CarLocation>(sql, new { CarId = carId }).FirstOrDefault();
+         var car =context.GetConnection().Query<CarLocation>(sql, new { CarId = carId }).FirstOrDefault();
+         
+         return car == null 
+             ? new Responce<CarLocation>(HttpStatusCode.NotFound, "Car Not Found") 
+             : new Responce<CarLocation>(car);
     }
 
-    public bool AddCarLocation(CarLocation carLocation)
+    public Responce<bool> AddCarLocation(CarLocation carLocation)
     {
         var sql = "insert into CarLocation (CarId, LocationId) values (@CarId, @LocationId)";
-        return context.GetConnection().Execute(sql, carLocation)>0;
+        var car= context.GetConnection().Execute(sql, carLocation);
+        return car==0
+            ? new Responce<bool>(HttpStatusCode.InternalServerError, "Internal Server Error")
+            : new Responce<bool>(HttpStatusCode.Created, "Car successfully added    ");
     }
 
-    public bool UpdateCarLocation(CarLocation carLocation)
+    public  Responce<bool> UpdateCarLocation(CarLocation carLocation)
     {
         var sql = "update CarLocation set LocationId = @LocationId where CarId = @CarId";
-        return context.GetConnection().Execute(sql, carLocation)>0;
+        var car =context.GetConnection().Execute(sql, carLocation);
+        return car == 0 
+            ? new Responce<bool>(HttpStatusCode.InternalServerError, "Internal Server Error")
+            : new Responce<bool>(HttpStatusCode.OK, "Car Location Updated");
+        
     }
 
-    public bool DeleteCarLocation(int carId)
+    public  Responce<bool> DeleteCarLocation(int carId)
     {
         var sql = "delete from CarLocation where CarId = @CarId";
-        return context.GetConnection().Execute(sql, new { CarId = carId }) > 0;
+        var car = context.GetConnection().Execute(sql, new { CarId = carId }) ;
+        return car == 0
+            ? new Responce<bool>(HttpStatusCode.InternalServerError, "Internal Server Error")
+            : new Responce<bool>(HttpStatusCode.OK, "Car Location Deleted");
     }
 }

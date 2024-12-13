@@ -1,5 +1,7 @@
-﻿using Dapper;
+﻿using System.Net;
+using Dapper;
 using DoMain.Models;
+using Infrastructure.ApiResponse;
 using Infrastructure.DataContext;
 using Infrastructure.Interfaces;
 
@@ -7,36 +9,42 @@ namespace Infrastructure.Services;
 
 public class RentalService(DapperContext context): IRentalService
 {
-    public List<Rental> GetRentals()
+    public Responce<List<Rental>> GetRentals()
     {
         var sql = "select * from Rental";
-        return context.GetConnection().Query<Rental>(sql).ToList();
+        var res= context.GetConnection().Query<Rental>(sql).ToList();
+        return new Responce<List<Rental>>(res);
         
     }
 
-    public Rental GetRentalById(int id)
+    public Responce<Rental> GetRentalById(int id)
     {
        var sql = "select * from Rental where Id = @Id";
-       return context.GetConnection().Query<Rental>(sql, new { Id = id }).FirstOrDefault();
+       var res= context.GetConnection().Query<Rental>(sql, new { Id = id }).FirstOrDefault();
+       if(res == null)
+           return new Responce<Rental>(HttpStatusCode.NotFound, "Rental not found");
+       return new Responce<Rental>(res);
        
     }
 
-    public bool AddRental(Rental rental)
+    public Responce<bool> AddRental(Rental rental)
     {
         var sql = "insert into Rentals(CarId, CustomerId, StartDate, EndDate, TotalCost) values (@CarId, @CustomerId, @StartDate, @EndDate, @TotalCost);\n";
         var res = context.GetConnection().Execute(sql, rental);
-        return res > 0;
+        return res == 0 ? new Responce<bool>(HttpStatusCode.InternalServerError, "Interval SERVER EROR"): new Responce<bool>(HttpStatusCode.Created, "Created Rental");
     }
 
-    public bool UpdateRental(Rental rental)
+    public Responce<bool> UpdateRental(Rental rental)
     {
         var sql ="Update Rentals set TotalCost = @TotalCost, StartDate=@StartDate,EndDate=@EndDate where Id = @Id";
-        return context.GetConnection().Execute(sql, rental)>0;
+        var res =context.GetConnection().Execute(sql, rental);
+        return res==0 ? new Responce<bool>(HttpStatusCode.InternalServerError, "Interval SERVER EROR"): new Responce<bool>(HttpStatusCode.OK, "Rental Updated");
     }
 
-    public bool DeleteRental(int id)
+    public Responce<bool> DeleteRental(int id)
     {
         var sql = "delete from Rentals where Id = @Id";
-        return context.GetConnection().Execute(sql, new { Id = id }) > 0;
+        var res = context.GetConnection().Execute(sql, new { Id = id }) ;
+        return res==0 ? new Responce<bool>(HttpStatusCode.InternalServerError, "Interval SERVER EROR"): new Responce<bool>(HttpStatusCode.OK, "Rental Deleted");
     }
 }

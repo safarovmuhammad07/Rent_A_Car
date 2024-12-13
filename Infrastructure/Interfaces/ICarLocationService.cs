@@ -1,12 +1,13 @@
 ﻿using DoMain.Models;
+using Infrastructure.ApiResponse;
 
 namespace Infrastructure.Interfaces;
 
 public interface ICarLocationService
 {
-    List<CarLocation> GetCarLocations();
-    CarLocation GetCarLocation(int carId);
-    bool AddCarLocation(CarLocation carLocation);
-    bool UpdateCarLocation(CarLocation carLocation);
-    bool DeleteCarLocation(int carId);
+    Responce<List<CarLocation>> GetCarLocations();
+    Responce<CarLocation> GetCarLocation(int carId);
+    Responce<bool> AddCarLocation(CarLocation carLocation);
+    Responce<bool> UpdateCarLocation(CarLocation carLocation);
+    Responce<bool> DeleteCarLocation(int carId);
 }

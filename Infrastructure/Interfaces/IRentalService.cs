@@ -1,12 +1,13 @@
 ﻿using DoMain.Models;
+using Infrastructure.ApiResponse;
 
 namespace Infrastructure.Interfaces;
 
 public interface IRentalService
 {
-    List<Rental> GetRentals();
-    Rental GetRentalById(int id);
-    bool AddRental(Rental rental);
-    bool UpdateRental(Rental rental);
-    bool DeleteRental(int id);
+    Responce<List<Rental>> GetRentals();
+    Responce<Rental> GetRentalById(int id);
+    Responce<bool> AddRental(Rental rental);
+    Responce<bool> UpdateRental(Rental rental);
+    Responce<bool> DeleteRental(int id);
 }
